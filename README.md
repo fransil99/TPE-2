@@ -23,4 +23,4 @@ completar el json con los datos, inserta a la tabla el nuevo item, verifica que 
 
 
 DELETE- http://localhost/TPE2/api/bikes/12
-borra la moto con el id dado, sino existe devuelve 404 Not found.
+borra la moto con el id dado, sino existe devuelve que no existe la moto con ese id 404 Not found.
