@@ -53,11 +53,14 @@ class BikesApiController
         // le doy la paginacion.
         if ($bikes != null) {
             if (isset($_GET['limit']) && ctype_digit($_GET['limit'])) {
-                $bikes = $this->model->paginar($_GET['limit']);
+                $bikes = $this->model->paginar($bikes, $_GET['limit']);
+            }else{
+                $this->view->response('Bad request', 400);
+                die();
             }
             $this->view->response($bikes, 200);
         } else {
-            $this->view->response('Not found', 404);
+            $this->view->response('Bad request', 400);
         }
     }
 

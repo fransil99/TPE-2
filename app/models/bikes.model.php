@@ -20,7 +20,7 @@ class BikesModel
             'descripcion' => 'descripcion',
             'cilindrada' => 'cilindrada',
             'precio' => 'precio',
-            'id_marca_fk' => 'id_marca_fk'
+            'marca' => 'id_marca_fk'
         );
 
 
@@ -43,16 +43,17 @@ class BikesModel
         return $bikes;
     }
 
-    public function paginar($limit,){
-            var_dump($limit);
-            $str_query = 'SELECT * FROM motos LIMIT ';
-            $str_query .= $limit;
-            var_dump($str_query);
-            $query = $this->db->prepare($str_query); //LIMIT $starts_where, $size_pages
-            $query->execute();
-            $bikes = $query->fetchAll(PDO::FETCH_OBJ);
-            return $bikes;
-        }
+    public function paginar($bikes, $limit){
+        //se pasa el array primero, despues el inicio, y el fin
+        return array_slice($bikes,0,$limit);
+    }
+    // var_dump($limit);
+    // $str_query = 'SELECT * FROM motos LIMIT ';
+    // $str_query .= $limit;
+    // var_dump($str_query);
+    // $query = $this->db->prepare($str_query); //LIMIT $starts_where, $size_pages
+    // $query->execute();
+    // $bikes = $query->fetchAll(PDO::FETCH_OBJ);
         
     
 
@@ -78,21 +79,4 @@ class BikesModel
 
         return $this->db->lastInsertId();
     }
-
-    // public function insert($nombre,$imagen,$descripcion,$cilindrada,$precio,$idFk){
-    //     $pathImg = null;
-    //     if($imagen){
-    //     $pathImg = $this->uploadImage($imagen);
-    //     $query = $this->db->prepare('INSERT INTO motos (nombre,imagen,descripcion,cilindrada,precio,id_marca_fk) VALUES (?,?,?,?,?,?)');
-    //     $query->execute(array($nombre,$pathImg,$descripcion,$cilindrada,$precio,$idFk));
-    // }else{
-    //     $query = $this->db->prepare('INSERT INTO motos (nombre,descripcion,cilindrada,precio,id_marca_fk) VALUES (?,?,?,?,?)');
-    //     $query->execute(array($nombre,$descripcion,$cilindrada,$precio,$idFk));
-    //     }
-    // }
-
-
-    /**
-     * Elimina una tarea dado su id.
-     */
 }

@@ -14,12 +14,16 @@ GET- http://localhost/TPE2/api/bikes?sort=nombre
 filtra por cualquier campo(columna) de la tabla.
 
 
-GET- http://localhost/TPE2/api/bikes?sort=nombre?order=DESC 
+GET- http://localhost/TPE2/api/bikes?sort=nombre&order=DESC 
 combina ambos, filtra por campo(columna) y ademas ordena de forma ascendente o descendente
 
 
 POST- http://localhost/TPE2/api/bikes 
 completar el json con los datos, inserta a la tabla el nuevo item, verifica que se le pasen todos los campos(columnas),si estan, se inserta con 201 Created,  sino no inserta retornando un  400 Bad Request.
+
+GET- http://localhost/TPE2/api/bikes?limit=1&sort=nombre&order=desc
+no importa el orden de los params, esto selecciona por que columna se ordena, como se ordema y cuantos mostrar.
+
 
 
 DELETE- http://localhost/TPE2/api/bikes/12
