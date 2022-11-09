@@ -23,6 +23,7 @@ class BikesModel
             'id_marca_fk' => 'id_marca_fk'
         );
 
+
         if (isset($columns[$sort])) {
             $str_query .= $columns[$sort] ." ";
         } else {
@@ -40,19 +41,20 @@ class BikesModel
         $query->execute();
         $bikes = $query->fetchAll(PDO::FETCH_OBJ);
         return $bikes;
-
-
-
-        // if(!empty($order)){
-
-        // }else{
-        //     $query = $this->db->prepare("SELECT * FROM motos");
-        //     $query->execute();
-        //     $bikes = $query->fetchAll(PDO::FETCH_OBJ); // devuelve un arreglo de objetos
-        // }
-
-        // ;
     }
+
+    public function paginar($limit,){
+            var_dump($limit);
+            $str_query = 'SELECT * FROM motos LIMIT ';
+            $str_query .= $limit;
+            var_dump($str_query);
+            $query = $this->db->prepare($str_query); //LIMIT $starts_where, $size_pages
+            $query->execute();
+            $bikes = $query->fetchAll(PDO::FETCH_OBJ);
+            return $bikes;
+        }
+        
+    
 
     public function get($id)
     {

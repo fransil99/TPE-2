@@ -25,31 +25,39 @@ class BikesApiController
 
     public function getBikes()
     {
+        //cuando solo hay order o solo columna, hay valores por defecto para la query.
         $defaultColumn = "precio";
         $defaultOrder = "ASC";
+        //verifico que si no estan los valores de array que preciso, se vaya a un 400 bad request.
+        foreach ($_GET as $i => $valor) {
+            if ($i != 'sort' && $i != 'order' && $i != 'limit' && $i != 'resource') {
+                $this->view->response('Bad Request', 400);
+                die();
+            }
+        }
         //si estan ambos, columna y orden hacer esto
-         if (isset($_GET['sort']) && isset($_GET['order'])) {
+        if (isset($_GET['sort']) && isset($_GET['order'])) {
             $bikes = $this->model->getAll($_GET['sort'], $_GET['order']);
-        } 
+        }
         //si esta solo columna hacer esto
         else if (isset($_GET['sort'])) {
             $bikes = $this->model->getAll($_GET['sort'], $defaultOrder);
-        } 
+        }
         //si esta solo order hacer esto
         else if (isset($_GET['order'])) {
             $bikes = $this->model->getAll($defaultColumn, $_GET['order']);
-        }
-        //  else if(la url termina en producto ){
-        //      $bikes = $this->model->getAll(null, null);
-        //  }
-        else {
+        } else {
             $bikes = $this->model->getAll($defaultColumn, $defaultOrder);
         }
-
+        //cuando me vuelva el arreglo, con las motos ordenadas, si hay un limit y es numero,
+        // le doy la paginacion.
         if ($bikes != null) {
+            if (isset($_GET['limit']) && ctype_digit($_GET['limit'])) {
+                $bikes = $this->model->paginar($_GET['limit']);
+            }
             $this->view->response($bikes, 200);
         } else {
-            $this->view->response('Bad Request', 400);
+            $this->view->response('Not found', 404);
         }
     }
 
