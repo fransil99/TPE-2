@@ -23,17 +23,14 @@ class BikesApiController
         return json_decode($this->data);
     }
 
-    public function getBikes()
-    {
-        //cuando solo hay order o solo columna, hay valores por defecto para la query.
-        $defaultColumn = "precio";
+    public function getBikes(){
+        $defaultColumn = "id";
         $defaultOrder = "ASC";
-        //verifico que si no estan los valores de array que preciso, se vaya a un 400 bad request.
         foreach ($_GET as $i => $valor) {
-            if ($i != 'sort' && $i != 'order' && $i != 'limit' && $i != 'resource') {
-                $this->view->response('Bad Request', 400);
-                die();
-            }
+            if ($i != 'sort' && $i != 'order' && $i != 'limit' && $i != 'resource' && $i != 'filter' && $i != 'filtervalue') {
+                    $this->view->response('Bad Request4', 400);
+                    die();
+                }
         }
         //si estan ambos, columna y orden hacer esto
         if (isset($_GET['sort']) && isset($_GET['order'])) {
@@ -49,20 +46,44 @@ class BikesApiController
         } else {
             $bikes = $this->model->getAll($defaultColumn, $defaultOrder);
         }
-        //cuando me vuelva el arreglo, con las motos ordenadas, si hay un limit y es numero,
-        // le doy la paginacion.
+        //&& isset(ctype_digit($_GET['offset']))
         if ($bikes != null) {
-            if (isset($_GET['limit']) && ctype_digit($_GET['limit'])) {
-                $bikes = $this->model->paginar($bikes, $_GET['limit']);
-            }else{
-                $this->view->response('Bad request', 400);
-                die();
+            if (isset($_GET['filter']) && isset($_GET['filtervalue'])) {
+                if (!is_string($_GET['filter'])){
+                    $this->view->response('Bad request1', 400);
+                    die();
+                }
+                $bikes = $this->filtrar($_GET['filter'], $_GET['filtervalue'], $bikes);
+            }
+            if (isset($_GET['limit'])) {
+                if (!ctype_digit($_GET['limit'])){
+                    $this->view->response('Bad request2', 400);
+                    die();
+                }
+                $bikes = $this->paginar($bikes, $_GET['limit'],);
             }
             $this->view->response($bikes, 200);
         } else {
-            $this->view->response('Bad request', 400);
+            $this->view->response('Bad Request3', 400);
         }
     }
+
+    public function filtrar($filter, $value, $bikes){
+        $filteredBikes = [];
+        foreach ($bikes as $bike) {
+            if($bike->$filter == $value){
+                array_push($filteredBikes, $bike);
+            }
+        }            
+        return $filteredBikes;
+    }
+
+    public function paginar($bikes, $limit){
+        //se pasa el array primero, despues el inicio, y el fin
+        return array_slice($bikes,0,$limit);
+    }
+
+
 
 
     public function getBike($params = null)

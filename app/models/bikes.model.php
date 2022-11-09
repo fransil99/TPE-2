@@ -43,10 +43,7 @@ class BikesModel
         return $bikes;
     }
 
-    public function paginar($bikes, $limit){
-        //se pasa el array primero, despues el inicio, y el fin
-        return array_slice($bikes,0,$limit);
-    }
+
     // var_dump($limit);
     // $str_query = 'SELECT * FROM motos LIMIT ';
     // $str_query .= $limit;
