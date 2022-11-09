@@ -2,10 +2,9 @@
 require_once './libs/Router.php';
 require_once './app/controllers/bikes-api.controller.php';
 
-// crea el router
 $router = new Router();
 
-// defina la tabla de ruteo
+//tabla de ruteo
 $router->addRoute('bikes', 'GET', 'BikesApiController', 'getBikes');
 $router->addRoute('bikes/:ID', 'GET', 'BikesApiController', 'getBike');
 $router->addRoute('bikes/:ID', 'DELETE', 'BikesApiController', 'deleteBike');
