@@ -37,7 +37,6 @@ class BikesModel
         }
 
         $str_query .= 'LIMIT'." ". $limit ." " . 'OFFSET '." ". $offset;
-        var_dump($str_query);
         $query = $this->db->prepare($str_query); //LIMIT $starts_where, $size_pages
         $query->execute();
         $bikes = $query->fetchAll(PDO::FETCH_OBJ);

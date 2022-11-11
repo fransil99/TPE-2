@@ -31,12 +31,11 @@ class BikesApiController
         $defaultOrder = "ASC";
         foreach ($_GET as $i => $valor) {
             if ($i != 'sort' && $i != 'order' && $i != 'limit' && $i != 'offset' && $i != 'resource' && $i != 'filter' && $i != 'filtervalue') {
-                $this->view->response('Bad Request', 400);
+                $this->view->response('Parametro Inexistente', 400);
                 die();
             }
         }
         if (isset($_GET['sort']) && isset($_GET['order']) && isset($_GET['limit']) && isset($_GET['offset'])) {
-            echo "entro al sort order limit offset ";
             if (ctype_digit($_GET['limit']) && ctype_digit($_GET['offset'])) {
                 $bikes = $this->model->getAll($_GET['sort'], $_GET['order'], $_GET['limit'], $_GET['offset']);
             } else {
@@ -44,7 +43,6 @@ class BikesApiController
                 die();
             }
         } else if (isset($_GET['limit']) && isset($_GET['offset']) && isset($_GET['sort'])) {
-            echo "entro al sort  limit offset ";
             if (ctype_digit($_GET['limit']) && ctype_digit($_GET['offset'])) {
                 $bikes = $this->model->getAll($_GET['sort'], $defaultOrder, $_GET['limit'], $_GET['offset']);
             } else {
@@ -52,7 +50,6 @@ class BikesApiController
                 die();
             }
         } else if (isset($_GET['limit']) && isset($_GET['offset']) && isset($_GET['order'])) {
-            echo "entro al  order limit offset ";
             if (ctype_digit($_GET['limit']) && ctype_digit($_GET['offset'])) {
                 $bikes = $this->model->getAll($defaultColumn, $_GET['order'], $_GET['limit'], $_GET['offset']);
             } else {
@@ -60,7 +57,6 @@ class BikesApiController
                 die();
             }
         } else if (isset($_GET['sort']) && isset($_GET['order']) && isset($_GET['offset'])) {
-            echo "entro al  sort order offset ";
             if (ctype_digit($_GET['offset'])) {
                 $bikes = $this->model->getAll($_GET['sort'], $_GET['order'], $defaultLimit, $_GET['offset']);
             } else {
@@ -68,7 +64,6 @@ class BikesApiController
                 die();
             }
         } else if (isset($_GET['sort']) && isset($_GET['order']) && isset($_GET['limit'])) {
-            echo "entro al  sort order limit ";
             if (ctype_digit($_GET['limit'])) {
                 $bikes = $this->model->getAll($_GET['sort'], $_GET['order'], $_GET['limit'], $defaultOffset);
             } else {
@@ -76,7 +71,6 @@ class BikesApiController
                 die();
             }
         } else if (isset($_GET['limit']) && isset($_GET['offset'])) {
-            echo "entro al solo offset y limit ";
             if (ctype_digit($_GET['limit']) && ctype_digit($_GET['offset'])) {
                 $bikes = $this->model->getAll($defaultColumn, $defaultOrder, $_GET['limit'], $_GET['offset']);
             } else {
@@ -84,43 +78,60 @@ class BikesApiController
                 die();
             }
         } else if (isset($_GET['sort']) && isset($_GET['order'])) {
-            echo "entro al sort order ";
             $bikes = $this->model->getAll($_GET['sort'], $_GET['order'], $defaultLimit, $defaultOffset);
         } else if (isset($_GET['limit']) && isset($_GET['order'])) {
-            echo "entro al limit order ";
-            $bikes = $this->model->getAll($defaultColumn, $_GET['order'], $_GET['limit'], $defaultOffset);
+            if (ctype_digit($_GET['limit'])) {
+                $bikes = $this->model->getAll($defaultColumn, $_GET['order'], $_GET['limit'], $defaultOffset);
+            } else {
+                $this->view->response('Limit debe ser un numero entero', 400);
+                die();
+            }
         } else if (isset($_GET['limit']) && isset($_GET['sort'])) {
-            echo "entro al limit sort ";
-            $bikes = $this->model->getAll($_GET['sort'], $defaultOrder, $_GET['limit'], $defaultOffset);
+            if (ctype_digit($_GET['limit'])) {
+                $bikes = $this->model->getAll($_GET['sort'], $defaultOrder, $_GET['limit'], $defaultOffset);
+            } else {
+                $this->view->response('Limit debe ser un numero entero', 400);
+                die();
+            }
         } else if (isset($_GET['sort']) && isset($_GET['offset'])) {
-            echo "entro al sort offset ";
-            $bikes = $this->model->getAll($_GET['sort'], $defaultOrder, $defaultLimit, $_GET['offset']);
+            if (ctype_digit($_GET['offset'])) {
+                $bikes = $this->model->getAll($_GET['sort'], $defaultOrder, $defaultLimit, $_GET['offset']);
+            } else {
+                $this->view->response('Offset debe ser un numero entero', 400);
+                die();
+            }
         } else if (isset($_GET['order']) && isset($_GET['offset'])) {
-            echo "entro al order offset ";
-            $bikes = $this->model->getAll($defaultColumn, $_GET['order'], $defaultLimit, $_GET['offset']);
+            if (ctype_digit($_GET['offset'])) {
+                $bikes = $this->model->getAll($defaultColumn, $_GET['order'], $defaultLimit, $_GET['offset']);
+            } else {
+                $this->view->response('Offset debe ser un numero entero', 400);
+                die();
+            }
         } else if (isset($_GET['sort'])) {
-            echo "entro al sort ";
             $bikes = $this->model->getAll($_GET['sort'], $defaultOrder, $defaultLimit, $defaultOffset);
         } else if (isset($_GET['order'])) {
-            echo "entro order ";
             $bikes = $this->model->getAll($defaultColumn, $_GET['order'], $defaultLimit, $defaultOffset);
         } else if (isset($_GET['offset'])) {
-            echo "entro offset ";
-            $bikes = $this->model->getAll($defaultColumn, $defaultOrder, $defaultLimit, $_GET['offset']);
+            if (ctype_digit($_GET['offset'])) {
+                $bikes = $this->model->getAll($defaultColumn, $defaultOrder, $defaultLimit, $_GET['offset']);
+            } else {
+                $this->view->response('Offset debe ser un numero entero', 400);
+                die();
+            }
         } else if (isset($_GET['limit'])) {
-            
-            echo "entro limit ";
-            $bikes = $this->model->getAll($defaultColumn, $defaultOrder, $_GET['limit'], $defaultOffset);
+            if (ctype_digit($_GET['limit'])) {
+                $bikes = $this->model->getAll($defaultColumn, $defaultOrder, $_GET['limit'], $defaultOffset);
+            } else {
+                $this->view->response('Limit debe ser un numero entero', 400);
+                die();
+            }
         } else {
-            echo "entro al default ";
             $bikes = $this->model->getAll($defaultColumn, $defaultOrder, $defaultLimit, $defaultOffset);
         }
-        //&& isset(ctype_digit($_GET['offset']))
         if ($bikes != null) {
             if (isset($_GET['filtervalue'])) {
                 $column = 'cilindrada';
                 $filtervalue = $_GET['filtervalue'];
-                echo "filter value ";
                 if ($filtervalue != 250 && $filtervalue != 450 && $filtervalue != 350) {
                     echo "entro al if cilindrada";
                     $this->view->response('El campo filtrado es por cilindrada, y solo se acepta 250, 350 y 450', 400);
@@ -130,13 +141,12 @@ class BikesApiController
             }
             $this->view->response($bikes, 200);
         } else {
-            $this->view->response('Valor de parametro incorrecto, ver README.md', 400);
+            $this->view->response('Valor de sort u order, incorrecto', 400);
         }
     }
 
     public function filtrar($column, $value, $bikes)
     {
-        echo "entro a funcion filtrar";
         $filteredBikes = [];
         foreach ($bikes as $bike) {
             if ($bike->$column == $value) {
