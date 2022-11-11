@@ -162,7 +162,6 @@ class BikesApiController
         // obtengo el id del arreglo de params
         $id = $params[':ID'];
         $bike = $this->model->get($id);
-
         // si no existe devuelvo 404
         if ($bike)
             $this->view->response($bike);
