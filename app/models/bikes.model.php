@@ -10,8 +10,9 @@ class BikesModel
         $this->db = new PDO('mysql:host=localhost;' . 'dbname=db_motos;charset=utf8', 'root', '');
     }
 
-    public function getAll($sort, $order)
+    public function getAll($sort, $order, $limit, $offset)
     {
+
         $str_query = 'SELECT * FROM motos ORDER BY ';
 
         $columns = array(
@@ -30,27 +31,18 @@ class BikesModel
             return null;
         }
         if (strtoupper($order) == 'ASC' || strtoupper($order) == 'DESC') {
-            $str_query .= $order;
+            $str_query .= $order ." " ;
         } else {
             return null;
         }
 
-        var_dump($str_query);
-        var_dump($columns[$sort]);
+        $str_query .= 'LIMIT'." ". $limit ." " . 'OFFSET '." ". $offset;
+
         $query = $this->db->prepare($str_query); //LIMIT $starts_where, $size_pages
         $query->execute();
         $bikes = $query->fetchAll(PDO::FETCH_OBJ);
         return $bikes;
     }
-
-
-    // var_dump($limit);
-    // $str_query = 'SELECT * FROM motos LIMIT ';
-    // $str_query .= $limit;
-    // var_dump($str_query);
-    // $query = $this->db->prepare($str_query); //LIMIT $starts_where, $size_pages
-    // $query->execute();
-    // $bikes = $query->fetchAll(PDO::FETCH_OBJ);
         
     
 
