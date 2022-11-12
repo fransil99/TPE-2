@@ -21,7 +21,17 @@ combina ambos, trae campo(columna) y ademas ordena de forma ascendente o descend
 
 
 POST- http://localhost/TPE2/api/bikes 
+
 completar el json con los datos, inserta a la tabla el nuevo item, verifica que se le pasen todos los campos(columnas),si estan, se inserta con 201 Created,  sino no inserta retornando un  400 Bad Request.
+{
+        "nombre": "POSTMAN MOTO",
+        "imagen": "images/imgTemp/634cbbb8dbbf4.jpg",
+        "descripcion": "Moto agregada por postman",
+        "cilindrada": 450,
+        "precio": 12399,
+        "id_marca_fk": 7
+    }
+    
 
 GET- http://localhost/TPE2/api/bikes?limit=1&sort=nombre&order=desc
 no importa el orden de los params, esto selecciona por que columna se ordena, como se ordena ,limite de items mostrados, y offset la cantidad que se saltea antes de arrancar.
