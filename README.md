@@ -37,7 +37,7 @@ completar el json con los datos, inserta a la tabla el nuevo item, verifica que 
 # GET- http://localhost/TPE2/api/bikes?limit=1&sort=nombre&order=desc
 ejemplo mostrando mas parametros combinados, en el caso que la columna no exista, o el order no sea ASC o DESC, o el limit no sea un numero entero positivo, va a dar error.
 
-# http://localhost/TPE2/api/bikes?filtervalue=350
+# GET- http://localhost/TPE2/api/bikes?filtervalue=350
 trae todas las motos con cilindrada, de tipo 250 340 y 450 , lo demas es incorrecto.
 
 # DELETE- http://localhost/TPE2/api/bikes/12
