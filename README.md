@@ -1,5 +1,6 @@
-hay valores por defecto para la consulta. para ser mas especifico todos los parametros son combinables.
-
+hay valores por defecto para la consulta. El que el consumidor de la api puede editar, ya sea sort, order, limit u offset, se pueden usar y combinar de la forma que desee.
+Ejemplos basicos:
+ 
 GET- http://localhost/TPE2/api/bikes   
 coleccion entera de motos 200 OK
 
@@ -34,7 +35,7 @@ completar el json con los datos, inserta a la tabla el nuevo item, verifica que 
     
 
 GET- http://localhost/TPE2/api/bikes?limit=1&sort=nombre&order=desc
-no importa el orden de los params, esto selecciona por que columna se ordena, como se ordena ,limite de items mostrados, y offset la cantidad que se saltea antes de arrancar.
+ejemplo mostrando mas parametros combinados, en el caso que la columna no exista, o el order no sea ASC o DESC, o el limit no sea un numero entero positivo, va a dar error.
 
 http://localhost/TPE2/api/bikes?filtervalue=350
 trae todas las motos con cilindrada, de tipo 250 340 y 450 , lo demas es incorrecto, puede ser combinado con demas params
