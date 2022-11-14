@@ -1,7 +1,7 @@
 
 ## Ejemplos basicos:
  hay valores por defecto para la consulta. El que el consumidor de la api puede editar, ya sea sort, order, limit u offset, se pueden usar y combinar de la forma que desee.
- 
+
 # GET- http://localhost/TPE2/api/bikes   
 coleccion entera de motos 200 OK
 
@@ -38,8 +38,7 @@ completar el json con los datos, inserta a la tabla el nuevo item, verifica que 
 ejemplo mostrando mas parametros combinados, en el caso que la columna no exista, o el order no sea ASC o DESC, o el limit no sea un numero entero positivo, va a dar error.
 
 # http://localhost/TPE2/api/bikes?filtervalue=350
-trae todas las motos con cilindrada, de tipo 250 340 y 450 , lo demas es incorrecto, puede ser combinado con demas params
-
+trae todas las motos con cilindrada, de tipo 250 340 y 450 , lo demas es incorrecto.
 
 # DELETE- http://localhost/TPE2/api/bikes/12
 borra la moto con el id dado, sino existe devuelve que no existe la moto con ese id 404 Not found.
